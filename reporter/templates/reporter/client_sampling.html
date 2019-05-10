@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Samples for Client: {{ client_id }}</title>
+    </head>
+    <body>
+        <ul id="samples"></ul>
+      <script>
+        var socket = new WebSocket('ws://' + window.location.host + '/client/{{ client_id }}');
+
+        socket.onopen = function open() {
+          console.log('WebSockets connection created.');
+        };
+
+        socket.onmessage = function message(event) {
+          var user = document.getElementById('samples');
+          var sample = document.createElement('li');
+          sample.innerText = event.data;
+          user.appendChild(sample);
+        };
+
+        if (socket.readyState === WebSocket.OPEN) {
+          socket.onopen();
+        }
+      </script>
+    </body>
+</html>
